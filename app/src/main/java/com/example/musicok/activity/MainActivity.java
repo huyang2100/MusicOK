@@ -5,6 +5,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaMetadataCompat;
+import android.support.v4.media.RatingCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.view.View;
@@ -56,21 +57,21 @@ public class MainActivity extends AppCompatActivity {
         mPlaylist.add(new MediaMetadataCompat.Builder()
                 .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, "歌曲的名字1")
                 .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, "作者的名字1")
-                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, "http://10.1.21.131:8080/test1.mp3")
+                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, "http://192.168.27.125:8080/test1.mp3")
                 .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, TimeUnit.MILLISECONDS.convert(160,TimeUnit.SECONDS))
                 .build());
 
         mPlaylist.add(new MediaMetadataCompat.Builder()
                 .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, "歌曲的名字2")
                 .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, "作者的名字2")
-                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, "http://10.1.21.131:8080/test2.mp3")
+                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, "http://192.168.27.125:8080/test2.mp3")
                 .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, TimeUnit.MILLISECONDS.convert(102,TimeUnit.SECONDS))
                 .build());
 
         mPlaylist.add(new MediaMetadataCompat.Builder()
                 .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, "小苹果")
                 .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, "筷子兄弟")
-                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, "http://10.1.21.131:8080/test3.mp3")
+                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, "http://192.168.27.125:8080/test3.mp3")
                 .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, TimeUnit.MILLISECONDS.convert(174,TimeUnit.SECONDS))
                 .build());
 
@@ -108,6 +109,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.btn_slow).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMediaBrowserHelper.getTransportControls().setRating(RatingCompat.newPercentageRating(1f));
+            }
+        });
+
+        findViewById(R.id.btn_fast).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMediaBrowserHelper.getTransportControls().setRating(RatingCompat.newPercentageRating(3f));
+            }
+        });
     }
 
     @Override

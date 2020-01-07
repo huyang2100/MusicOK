@@ -2,6 +2,7 @@ package com.example.musicok.player;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.media.PlaybackParams;
 import android.os.SystemClock;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
@@ -23,6 +24,7 @@ public class MediaPlayerAdapter extends PlayerAdapter {
     private MediaMetadataCompat mCurrentMetadata;
     private long mSeekWhileNotPlaying = -1;
     private int mState;
+    private float mSpeed = 1.0f;
 
     public MediaPlayerAdapter(Context context, PlaybackInfoListener playbackInfoListener) {
         super(context);
@@ -61,7 +63,7 @@ public class MediaPlayerAdapter extends PlayerAdapter {
 
         PlaybackStateCompat.Builder builder = new PlaybackStateCompat.Builder();
         builder.setActions(getAvailableActions());
-        builder.setState(mState, reportPosition, 1.0f, SystemClock.elapsedRealtime());
+        builder.setState(mState, reportPosition, mSpeed, SystemClock.elapsedRealtime());
         mPlaybackInfoListener.onPlaybackStateChange(builder.build());
     }
 
@@ -179,5 +181,20 @@ public class MediaPlayerAdapter extends PlayerAdapter {
 
     public MediaMetadataCompat getCurrentMedia() {
         return mCurrentMetadata;
+    }
+
+    public void setSpeed(float speed) {
+        if (mMediaPlayer != null) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                mSpeed = speed;
+                if (mMediaPlayer.isPlaying()) {
+                    mMediaPlayer.setPlaybackParams(mMediaPlayer.getPlaybackParams().setSpeed(speed));
+                }else{
+                    mMediaPlayer.setPlaybackParams(mMediaPlayer.getPlaybackParams().setSpeed(speed));
+                    mMediaPlayer.pause();
+                }
+                setNewState(mState);
+            }
+        }
     }
 }

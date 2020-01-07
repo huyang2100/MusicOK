@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.MediaMetadataCompat;
+import android.support.v4.media.RatingCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
@@ -140,6 +141,12 @@ public class MusicService extends MediaBrowserServiceCompat {
         public void onPause() {
             Log.d(TAG, "onPause: ");
             mPlayerAdapter.pause();
+        }
+
+        @Override
+        public void onSetRating(RatingCompat rating) {
+            float speed = rating.getPercentRating();
+            mPlayerAdapter.setSpeed(speed);
         }
 
         @Override
