@@ -170,6 +170,27 @@ public class MediaPlayerAdapter extends PlayerAdapter {
                 setNewState(PlaybackStateCompat.STATE_PLAYING);
             }
         });
+
+        mMediaPlayer.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
+            @Override
+            public void onBufferingUpdate(MediaPlayer mp, int percent) {
+                long reportPosition;
+                if (mSeekWhileNotPlaying >= 0) {
+                    reportPosition = mSeekWhileNotPlaying;
+                    if (mState == PlaybackStateCompat.STATE_PLAYING) {
+                        mSeekWhileNotPlaying = -1;
+                    }
+                } else {
+                    reportPosition = mMediaPlayer == null ? 0 : mMediaPlayer.getCurrentPosition();
+                }
+
+                PlaybackStateCompat.Builder builder = new PlaybackStateCompat.Builder();
+                builder.setActions(getAvailableActions());
+                builder.setBufferedPosition(percent);
+                builder.setState(mState, reportPosition, mSpeed, SystemClock.elapsedRealtime());
+                mPlaybackInfoListener.onPlaybackStateChange(builder.build());
+            }
+        });
     }
 
     private void release() {

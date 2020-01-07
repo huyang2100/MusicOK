@@ -2,6 +2,7 @@ package com.example.musicok.view;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.os.Handler;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
@@ -9,8 +10,11 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.animation.LinearInterpolator;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatSeekBar;
+
+import java.util.concurrent.TimeUnit;
 
 public class MediaSeekBar extends AppCompatSeekBar {
     private static final String TAG = "MediaSeekBar";
@@ -111,7 +115,12 @@ public class MediaSeekBar extends AppCompatSeekBar {
 
             int progress = state != null ? (int) state.getPosition() : 0;
 
-            setProgress(progress);
+//            setProgress(progress);
+
+            int bufferProgress = state != null ? (int) state.getBufferedPosition() : 0;
+            if (bufferProgress != 0) {
+                setSecondaryProgress(bufferProgress * getMax() / 100);
+            }
 
             //如果媒体正在播放，则seekbar需要跟随拖动
             if (state != null && state.getState() == PlaybackStateCompat.STATE_PLAYING) {
@@ -131,6 +140,7 @@ public class MediaSeekBar extends AppCompatSeekBar {
         public void onMetadataChanged(MediaMetadataCompat metadata) {
             int max = metadata != null ? (int) metadata.getLong(MediaMetadataCompat.METADATA_KEY_DURATION) : 0;
             setProgress(0);
+            setSecondaryProgress(0);
             setMax(max);
         }
     }
