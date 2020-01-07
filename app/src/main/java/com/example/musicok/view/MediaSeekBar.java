@@ -139,9 +139,9 @@ public class MediaSeekBar extends AppCompatSeekBar {
         @Override
         public void onMetadataChanged(MediaMetadataCompat metadata) {
             int max = metadata != null ? (int) metadata.getLong(MediaMetadataCompat.METADATA_KEY_DURATION) : 0;
+            setMax(max);
             setProgress(0);
             setSecondaryProgress(0);
-            setMax(max);
         }
     }
 }

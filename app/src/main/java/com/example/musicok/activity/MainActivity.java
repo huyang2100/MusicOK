@@ -54,25 +54,40 @@ public class MainActivity extends AppCompatActivity {
         mSeekBar = findViewById(R.id.seekbar);
         mRootView = findViewById(R.id.rootview);
 
+        String mHost = "http://192.168.27.125:8080/";
+        mPlaylist.add(new MediaMetadataCompat.Builder()
+                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, "2019-12-135")
+                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, "2019-12-135")
+                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, mHost + "2019-12-135.mp3")
+                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, TimeUnit.MILLISECONDS.convert(2 * 60 * 60 + 17 * 60 + 36, TimeUnit.SECONDS))
+                .build());
+
+        mPlaylist.add(new MediaMetadataCompat.Builder()
+                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, "2019-12-116-1")
+                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, "2019-12-116-1")
+                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, mHost + "2019-12-116-1.mp3")
+                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, TimeUnit.MILLISECONDS.convert(28 * 60 + 25, TimeUnit.SECONDS))
+                .build());
+
         mPlaylist.add(new MediaMetadataCompat.Builder()
                 .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, "歌曲的名字1")
                 .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, "作者的名字1")
-                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, "http://192.168.27.125:8080/test1.mp3")
-                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, TimeUnit.MILLISECONDS.convert(160,TimeUnit.SECONDS))
+                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, mHost + "test1.mp3")
+                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, TimeUnit.MILLISECONDS.convert(160, TimeUnit.SECONDS))
                 .build());
 
         mPlaylist.add(new MediaMetadataCompat.Builder()
                 .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, "歌曲的名字2")
                 .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, "作者的名字2")
-                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, "http://192.168.27.125:8080/test2.mp3")
-                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, TimeUnit.MILLISECONDS.convert(102,TimeUnit.SECONDS))
+                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, mHost + "test2.mp3")
+                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, TimeUnit.MILLISECONDS.convert(102, TimeUnit.SECONDS))
                 .build());
 
         mPlaylist.add(new MediaMetadataCompat.Builder()
                 .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, "小苹果")
                 .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, "筷子兄弟")
-                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, "http://192.168.27.125:8080/test3.mp3")
-                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, TimeUnit.MILLISECONDS.convert(174,TimeUnit.SECONDS))
+                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, mHost + "test3.mp3")
+                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, TimeUnit.MILLISECONDS.convert(174, TimeUnit.SECONDS))
                 .build());
 
         MediaLibrary.getInstance().setMedialList(mPlaylist);
@@ -86,9 +101,9 @@ public class MainActivity extends AppCompatActivity {
         mIvPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mIsPlaying){
+                if (mIsPlaying) {
                     mMediaBrowserHelper.getTransportControls().pause();
-                }else{
+                } else {
                     mMediaBrowserHelper.getTransportControls().play();
                 }
             }
@@ -150,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onLoadChildren(@NonNull String parentId, @NonNull List<MediaBrowserCompat.MediaItem> result) {
             MediaControllerCompat mediaController = getMediaController();
-            for(MediaBrowserCompat.MediaItem mediaItem : result){
+            for (MediaBrowserCompat.MediaItem mediaItem : result) {
                 mediaController.addQueueItem(mediaItem.getDescription());
             }
             mediaController.getTransportControls().prepare();
@@ -160,17 +175,17 @@ public class MainActivity extends AppCompatActivity {
     private class MediaBrowserListener extends MediaControllerCompat.Callback {
         @Override
         public void onPlaybackStateChanged(PlaybackStateCompat state) {
-            mIsPlaying = state!=null && state.getState() == PlaybackStateCompat.STATE_PLAYING;
-            if(mIsPlaying){
+            mIsPlaying = state != null && state.getState() == PlaybackStateCompat.STATE_PLAYING;
+            if (mIsPlaying) {
                 mIvPlay.setBackgroundResource(R.drawable.ic_pause);
-            }else {
+            } else {
                 mIvPlay.setBackgroundResource(R.drawable.ic_play);
             }
         }
 
         @Override
         public void onMetadataChanged(MediaMetadataCompat metadata) {
-            if(metadata == null){
+            if (metadata == null) {
                 return;
             }
 
