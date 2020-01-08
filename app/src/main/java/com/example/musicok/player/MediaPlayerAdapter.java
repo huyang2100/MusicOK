@@ -25,6 +25,7 @@ public class MediaPlayerAdapter extends PlayerAdapter {
     private long mSeekWhileNotPlaying = -1;
     private int mState;
     private float mSpeed = 1.0f;
+    private int mPercent;
 
     public MediaPlayerAdapter(Context context, PlaybackInfoListener playbackInfoListener) {
         super(context);
@@ -63,6 +64,7 @@ public class MediaPlayerAdapter extends PlayerAdapter {
 
         PlaybackStateCompat.Builder builder = new PlaybackStateCompat.Builder();
         builder.setActions(getAvailableActions());
+        builder.setBufferedPosition(mPercent);
         builder.setState(mState, reportPosition, mSpeed, SystemClock.elapsedRealtime());
         mPlaybackInfoListener.onPlaybackStateChange(builder.build());
     }
@@ -147,6 +149,7 @@ public class MediaPlayerAdapter extends PlayerAdapter {
             }
             return;
         } else {
+            mPercent = 0;
             release();
         }
 
@@ -220,21 +223,8 @@ public class MediaPlayerAdapter extends PlayerAdapter {
         mMediaPlayer.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
             @Override
             public void onBufferingUpdate(MediaPlayer mp, int percent) {
-                long reportPosition;
-                if (mSeekWhileNotPlaying >= 0) {
-                    reportPosition = mSeekWhileNotPlaying;
-                    if (mState == PlaybackStateCompat.STATE_PLAYING) {
-                        mSeekWhileNotPlaying = -1;
-                    }
-                } else {
-                    reportPosition = mMediaPlayer == null ? 0 : mMediaPlayer.getCurrentPosition();
-                }
-
-                PlaybackStateCompat.Builder builder = new PlaybackStateCompat.Builder();
-                builder.setActions(getAvailableActions());
-                builder.setBufferedPosition(percent);
-                builder.setState(mState, reportPosition, mSpeed, SystemClock.elapsedRealtime());
-                mPlaybackInfoListener.onPlaybackStateChange(builder.build());
+                mPercent = percent;
+                setNewState(mState);
             }
         });
     }

@@ -118,9 +118,7 @@ public class MediaSeekBar extends AppCompatSeekBar {
 //            setProgress(progress);
 
             int bufferProgress = state != null ? (int) state.getBufferedPosition() : 0;
-            if (bufferProgress != 0) {
-                setSecondaryProgress(bufferProgress * getMax() / 100);
-            }
+            setSecondaryProgress(bufferProgress * getMax() / 100);
 
             //如果媒体正在播放，则seekbar需要跟随拖动
             if (state != null && state.getState() == PlaybackStateCompat.STATE_PLAYING) {
@@ -129,6 +127,11 @@ public class MediaSeekBar extends AppCompatSeekBar {
                 if (timeToEnd <= 0) {
                     return;
                 }
+
+                if (mProgressAnimator != null) {
+                    mProgressAnimator.cancel();
+                }
+
                 mProgressAnimator = ValueAnimator.ofInt(progress, getMax()).setDuration(timeToEnd);
                 mProgressAnimator.setInterpolator(new LinearInterpolator());
                 mProgressAnimator.addUpdateListener(this);
