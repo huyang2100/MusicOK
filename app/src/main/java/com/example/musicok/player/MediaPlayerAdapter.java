@@ -254,4 +254,8 @@ public class MediaPlayerAdapter extends PlayerAdapter {
             }
         }
     }
+
+    public void syncState() {
+        setNewState(mState);
+    }
 }

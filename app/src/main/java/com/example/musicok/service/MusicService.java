@@ -171,6 +171,11 @@ public class MusicService extends MediaBrowserServiceCompat {
         }
 
         @Override
+        public void onFastForward() {
+            mPlayerAdapter.syncState();
+        }
+
+        @Override
         public void onSeekTo(long pos) {
             Log.d(TAG, "onSeekTo: ");
             mPlayerAdapter.seekTo(pos);
@@ -186,7 +191,6 @@ public class MusicService extends MediaBrowserServiceCompat {
 
         @Override
         public void onPlaybackStateChange(PlaybackStateCompat state) {
-            Log.d(TAG, "onPlaybackStateChange: ");
             //更改session状态
             mSession.setPlaybackState(state);
 

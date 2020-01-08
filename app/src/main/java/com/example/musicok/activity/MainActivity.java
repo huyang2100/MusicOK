@@ -3,11 +3,13 @@ package com.example.musicok.activity;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.RatingCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTvSonger;
     private LinearLayout mRootView;
     private List<MediaMetadataCompat> mPlaylist = new ArrayList<>();
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +127,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mSeekBar.setOnMetadataChangedListener(new MediaSeekBar.OnMetadataChangedListener() {
+            @Override
+            public void onMetadataChanged() {
+                mMediaBrowserHelper.getTransportControls().fastForward();
+            }
+        });
+
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,7 +200,6 @@ public class MainActivity extends AppCompatActivity {
             if (metadata == null) {
                 return;
             }
-
             //修改歌名
             mTvSongName.setText(metadata.getString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE));
             //修改演唱者

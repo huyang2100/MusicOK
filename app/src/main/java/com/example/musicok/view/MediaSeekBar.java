@@ -23,6 +23,7 @@ public class MediaSeekBar extends AppCompatSeekBar {
     private MediaControllerCallback mControllerCallback;
     private ValueAnimator mProgressAnimator;
     private OnSeekChangeListener mOnSeekChangeListener;
+    private OnMetadataChangedListener mMetadataChangedListener;
 
     public MediaSeekBar(Context context) {
         super(context);
@@ -120,6 +121,8 @@ public class MediaSeekBar extends AppCompatSeekBar {
             int bufferProgress = state != null ? (int) state.getBufferedPosition() : 0;
             setSecondaryProgress(bufferProgress * getMax() / 100);
 
+            Log.d(TAG, String.format("onPlaybackStateChanged: state: %d, max: %d ,progress: %d", state.getState(), getMax(), progress));
+
             //如果媒体正在播放，则seekbar需要跟随拖动
             if (state != null && state.getState() == PlaybackStateCompat.STATE_PLAYING) {
                 //剩余的播放时间
@@ -141,10 +144,23 @@ public class MediaSeekBar extends AppCompatSeekBar {
 
         @Override
         public void onMetadataChanged(MediaMetadataCompat metadata) {
+            Log.d(TAG, "onPlaybackStateChanged: seek");
             int max = metadata != null ? (int) metadata.getLong(MediaMetadataCompat.METADATA_KEY_DURATION) : 0;
             setMax(max);
             setProgress(0);
             setSecondaryProgress(0);
+
+            if(mMetadataChangedListener!=null){
+                mMetadataChangedListener.onMetadataChanged();
+            }
         }
+    }
+
+    public interface OnMetadataChangedListener{
+        void onMetadataChanged();
+    }
+
+    public void setOnMetadataChangedListener(OnMetadataChangedListener onMetadataChangedListener){
+        mMetadataChangedListener = onMetadataChangedListener;
     }
 }
