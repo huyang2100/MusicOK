@@ -159,6 +159,7 @@ public class MediaPlayerAdapter extends PlayerAdapter {
         } catch (IOException e) {
             e.printStackTrace();
             Log.e(TAG, "playFromUrl: " + e.toString());
+            Toast.makeText(mContext, e.toString(), Toast.LENGTH_SHORT).show();
         }
 
         mMediaPlayer.prepareAsync();
@@ -168,6 +169,51 @@ public class MediaPlayerAdapter extends PlayerAdapter {
             public void onPrepared(MediaPlayer mp) {
                 mp.start();
                 setNewState(PlaybackStateCompat.STATE_PLAYING);
+            }
+        });
+
+        mMediaPlayer.setOnInfoListener(new MediaPlayer.OnInfoListener() {
+            @Override
+            public boolean onInfo(MediaPlayer mp, int what, int extra) {
+                return false;
+            }
+        });
+
+        mMediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(MediaPlayer mp, int what, int extra) {
+                switch (what) {
+                    //File or network related operation errors
+                    case MediaPlayer.MEDIA_ERROR_IO:
+                        Toast.makeText(mContext, "网络错误，请检查网络！" + what, Toast.LENGTH_SHORT).show();
+                        break;
+                    //Bitstream is not conforming to the related coding standard or file spec
+                    case MediaPlayer.MEDIA_ERROR_MALFORMED:
+                        Toast.makeText(mContext, "码流不符合相关编码标准或文件规范！", Toast.LENGTH_SHORT).show();
+                        break;
+                    //Media server died. In this case, the application must release the MediaPlayer object and instantiate a new one
+                    case MediaPlayer.MEDIA_ERROR_SERVER_DIED:
+                        playFromUrl(mCurrentMetadata);
+                        break;
+                    //Some operation takes too long to complete, usually more than 3-5 seconds.
+                    case MediaPlayer.MEDIA_ERROR_TIMED_OUT:
+                        Toast.makeText(mContext, "超时！", Toast.LENGTH_SHORT).show();
+                        break;
+                    //Unspecified media player error
+                    case MediaPlayer.MEDIA_ERROR_UNKNOWN:
+                        Toast.makeText(mContext, "未知错误！", Toast.LENGTH_SHORT).show();
+                        break;
+                    //Bitstream is conforming to the related coding standard or file spec, but the media framework does not support the feature
+                    case MediaPlayer.MEDIA_ERROR_UNSUPPORTED:
+                        Toast.makeText(mContext, "不支持该编码！", Toast.LENGTH_SHORT).show();
+                        break;
+                    case -38:
+                        Toast.makeText(mContext, "网络错误，请检查网络！ " + what, Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        Toast.makeText(mContext, "错误：" + what, Toast.LENGTH_SHORT).show();
+                }
+                return false;
             }
         });
 
@@ -210,7 +256,7 @@ public class MediaPlayerAdapter extends PlayerAdapter {
                 mSpeed = speed;
                 if (mMediaPlayer.isPlaying()) {
                     mMediaPlayer.setPlaybackParams(mMediaPlayer.getPlaybackParams().setSpeed(speed));
-                }else{
+                } else {
                     mMediaPlayer.setPlaybackParams(mMediaPlayer.getPlaybackParams().setSpeed(speed));
                     mMediaPlayer.pause();
                 }

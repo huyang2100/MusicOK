@@ -54,20 +54,20 @@ public class MainActivity extends AppCompatActivity {
         mSeekBar = findViewById(R.id.seekbar);
         mRootView = findViewById(R.id.rootview);
 
-        String mHost = "http://192.168.27.125:8080/";
-        mPlaylist.add(new MediaMetadataCompat.Builder()
-                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, "2019-12-135")
-                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, "2019-12-135")
-                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, mHost + "2019-12-135.mp3")
-                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, TimeUnit.MILLISECONDS.convert(2 * 60 * 60 + 17 * 60 + 36, TimeUnit.SECONDS))
-                .build());
-
-        mPlaylist.add(new MediaMetadataCompat.Builder()
-                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, "2019-12-116-1")
-                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, "2019-12-116-1")
-                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, mHost + "2019-12-116-1.mp3")
-                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, TimeUnit.MILLISECONDS.convert(28 * 60 + 25, TimeUnit.SECONDS))
-                .build());
+        String mHost = "http://10.1.21.142:8080/";
+//        mPlaylist.add(new MediaMetadataCompat.Builder()
+//                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, "2019-12-135")
+//                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, "2019-12-135")
+//                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, mHost + "2019-12-135.mp3")
+//                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, TimeUnit.MILLISECONDS.convert(2 * 60 * 60 + 17 * 60 + 36, TimeUnit.SECONDS))
+//                .build());
+//
+//        mPlaylist.add(new MediaMetadataCompat.Builder()
+//                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, "2019-12-116-1")
+//                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, "2019-12-116-1")
+//                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, mHost + "2019-12-116-1.mp3")
+//                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, TimeUnit.MILLISECONDS.convert(28 * 60 + 25, TimeUnit.SECONDS))
+//                .build());
 
         mPlaylist.add(new MediaMetadataCompat.Builder()
                 .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, "歌曲的名字1")
