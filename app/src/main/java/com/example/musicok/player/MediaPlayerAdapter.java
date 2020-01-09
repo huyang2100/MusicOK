@@ -216,6 +216,8 @@ public class MediaPlayerAdapter extends PlayerAdapter {
                     default:
                         Toast.makeText(mContext, "错误：" + what, Toast.LENGTH_SHORT).show();
                 }
+
+                setNewState(PlaybackStateCompat.STATE_PAUSED);
                 return false;
             }
         });
