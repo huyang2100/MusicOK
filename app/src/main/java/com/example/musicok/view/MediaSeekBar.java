@@ -54,7 +54,9 @@ public class MediaSeekBar extends AppCompatSeekBar {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 mIsTracking = false;
-                mMediaController.getTransportControls().seekTo(seekBar.getProgress());
+                if (mMediaController != null) {
+                    mMediaController.getTransportControls().seekTo(seekBar.getProgress());
+                }
             }
         });
     }
@@ -150,17 +152,17 @@ public class MediaSeekBar extends AppCompatSeekBar {
             setProgress(0);
             setSecondaryProgress(0);
 
-            if(mMetadataChangedListener!=null){
+            if (mMetadataChangedListener != null) {
                 mMetadataChangedListener.onMetadataChanged();
             }
         }
     }
 
-    public interface OnMetadataChangedListener{
+    public interface OnMetadataChangedListener {
         void onMetadataChanged();
     }
 
-    public void setOnMetadataChangedListener(OnMetadataChangedListener onMetadataChangedListener){
+    public void setOnMetadataChangedListener(OnMetadataChangedListener onMetadataChangedListener) {
         mMetadataChangedListener = onMetadataChangedListener;
     }
 }

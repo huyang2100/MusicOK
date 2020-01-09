@@ -72,33 +72,33 @@ public class MainActivity extends AppCompatActivity {
 //                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, TimeUnit.MILLISECONDS.convert(28 * 60 + 25, TimeUnit.SECONDS))
 //                .build());
 
+        mPlaylist.add(new MediaMetadataCompat.Builder()
+                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, "2019-12-129")
+                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, "2019-12-129")
+                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, "http://spcz.bjcourt.gov.cn/Uploads/2019-12-129.mp3")
+                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, TimeUnit.MILLISECONDS.convert(2 * 60 * 60 + 48 * 60 + 34, TimeUnit.SECONDS))
+                .build());
+
 //        mPlaylist.add(new MediaMetadataCompat.Builder()
-//                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, "2019-12-129")
-//                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, "2019-12-129")
-//                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, "http://spcz.bjcourt.gov.cn/Uploads/2019-12-129.mp3")
-//                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, TimeUnit.MILLISECONDS.convert(2 * 60 * 60 + 48 * 60 + 34, TimeUnit.SECONDS))
+//                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, "歌曲的名字1")
+//                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, "作者的名字1")
+//                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, mHost + "test1.mp3")
+//                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, TimeUnit.MILLISECONDS.convert(160, TimeUnit.SECONDS))
 //                .build());
-
-        mPlaylist.add(new MediaMetadataCompat.Builder()
-                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, "歌曲的名字1")
-                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, "作者的名字1")
-                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, mHost + "test1.mp3")
-                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, TimeUnit.MILLISECONDS.convert(160, TimeUnit.SECONDS))
-                .build());
-
-        mPlaylist.add(new MediaMetadataCompat.Builder()
-                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, "歌曲的名字2")
-                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, "作者的名字2")
-                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, mHost + "test2.mp3")
-                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, TimeUnit.MILLISECONDS.convert(102, TimeUnit.SECONDS))
-                .build());
-
-        mPlaylist.add(new MediaMetadataCompat.Builder()
-                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, "小苹果")
-                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, "筷子兄弟")
-                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, mHost + "test3.mp3")
-                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, TimeUnit.MILLISECONDS.convert(174, TimeUnit.SECONDS))
-                .build());
+//
+//        mPlaylist.add(new MediaMetadataCompat.Builder()
+//                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, "歌曲的名字2")
+//                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, "作者的名字2")
+//                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, mHost + "test2.mp3")
+//                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, TimeUnit.MILLISECONDS.convert(102, TimeUnit.SECONDS))
+//                .build());
+//
+//        mPlaylist.add(new MediaMetadataCompat.Builder()
+//                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, "小苹果")
+//                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, "筷子兄弟")
+//                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, mHost + "test3.mp3")
+//                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, TimeUnit.MILLISECONDS.convert(174, TimeUnit.SECONDS))
+//                .build());
 
         MediaLibrary.getInstance().setMedialList(mPlaylist);
 
