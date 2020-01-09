@@ -220,13 +220,13 @@ public class MusicService extends MediaBrowserServiceCompat {
             }
 
             public void updateNotificationForPause(PlaybackStateCompat state) {
-                stopForeground(false);
+//                stopForeground(false);
                 Notification notification = mNotificationManager.getNotification(mPlayerAdapter.getCurrentMedia(), state, getSessionToken());
                 mNotificationManager.getNotifiManager().notify(MediaNotificationManager.NOTIFICATION_ID, notification);
             }
 
             public void moveServiceOutOfStartedState(PlaybackStateCompat state) {
-                stopForeground(true);
+//                stopForeground(true);
                 stopSelf();
                 mServiceInStartedState = false;
             }

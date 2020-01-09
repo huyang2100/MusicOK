@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         mSeekBar = findViewById(R.id.seekbar);
         mRootView = findViewById(R.id.rootview);
 
-        String mHost = "http://192.168.27.125:8080/";
+        String mHost = "http://10.1.21.36:8080/";
 //        mPlaylist.add(new MediaMetadataCompat.Builder()
 //                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, "2019-12-135")
 //                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, "2019-12-135")

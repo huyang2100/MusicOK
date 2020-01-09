@@ -116,7 +116,7 @@ public class MediaSeekBar extends AppCompatSeekBar {
 
             int progress = state != null ? (int) state.getPosition() : 0;
 
-//            setProgress(progress);
+            setProgress(progress);
 
             int bufferProgress = state != null ? (int) state.getBufferedPosition() : 0;
             setSecondaryProgress(bufferProgress * getMax() / 100);
